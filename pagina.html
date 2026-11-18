@@ -1,0 +1,695 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tempero da Casa | Receitas</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #fbf8f1;
+    color: #252923;
+}
+
+header {
+    background: #fff;
+    padding: 20px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+}
+
+.logo {
+    color: #294b36;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #e58b45;
+}
+
+nav a {
+    text-decoration: none;
+    color: #444;
+    margin-left: 20px;
+}
+
+nav a:hover {
+    color: #e58b45;
+}
+
+.hero {
+    background: linear-gradient(rgba(20,45,30,.75),rgba(20,45,30,.75)),
+    url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1600')
+    center/cover;
+    padding: 110px 8%;
+    color: white;
+}
+
+.hero h1 {
+    font-size: 48px;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 25px;
+}
+
+.btn {
+    display: inline-block;
+    background: #e58b45;
+    color: #222;
+    padding: 14px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.container {
+    width: 84%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+section {
+    padding: 65px 0;
+}
+
+.section-title {
+    color: #294b36;
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.search {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.filter {
+    padding: 9px 18px;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.filter.active,
+.filter:hover {
+    background: #294b36;
+    color: white;
+}
+
+.recipes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.recipe {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px #0000000c;
+}
+
+.recipe img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.recipe-content {
+    padding: 20px;
+}
+
+.tag {
+    background: #fff0e2;
+    color: #a75e27;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.recipe h3 {
+    margin: 15px 0 8px;
+    font-size: 21px;
+}
+
+.recipe p {
+    color: #777;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.info {
+    margin: 15px 0;
+    color: #777;
+    font-size: 14px;
+}
+
+.details {
+    background: none;
+    border: none;
+    color: #294b36;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.about {
+    background: #eef0e8;
+    padding: 40px;
+    border-radius: 20px;
+}
+
+.about h2 {
+    color: #294b36;
+    margin-bottom: 15px;
+}
+
+.about p {
+    line-height: 1.8;
+    color: #555;
+}
+
+footer {
+    background: #1d3828;
+    color: white;
+    text-align: center;
+    padding: 30px;
+}
+
+footer p {
+    color: #ddd;
+    margin-top: 8px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #000b;
+    z-index: 10;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.modal-content h2,
+.modal-content h3 {
+    color: #294b36;
+    margin: 15px 0;
+}
+
+.modal-content li {
+    margin: 8px 0 8px 20px;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    border: none;
+    background: #eee;
+    padding: 8px 12px;
+    border-radius: 50%;
+}
+
+@media(max-width: 800px) {
+    .recipes {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+}
+
+@media(max-width: 550px) {
+    header {
+        padding: 18px 5%;
+    }
+
+    nav a {
+        margin-left: 10px;
+        font-size: 14px;
+    }
+
+    .container {
+        width: 90%;
+    }
+
+    .recipes {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding: 75px 5%;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .about {
+        padding: 25px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Tempero<span> da Casa</span></div>
+
+    <nav>
+        <a href="#">Início</a>
+        <a href="#receitas">Receitas</a>
+        <a href="#sobre">Sobre</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <h1>Um toque de carinho em cada receita.</h1>
+
+        <p>
+            Descubra receitas deliciosas e práticas
+            para transformar suas refeições.
+        </p>
+
+        <a href="#receitas" class="btn">
+            Explorar receitas
+        </a>
+    </div>
+</section>
+
+<section id="receitas">
+    <div class="container">
+
+        <h2 class="section-title">Nossas receitas</h2>
+
+        <p class="subtitle">
+            Encontre sua próxima receita favorita.
+        </p>
+
+        <input
+            type="text"
+            id="search"
+            class="search"
+            placeholder="Buscar receitas ou ingredientes..."
+        >
+
+        <div class="filters">
+            <button class="filter active" data-category="Todas">Todas</button>
+            <button class="filter" data-category="Almoço">Almoço</button>
+            <button class="filter" data-category="Jantar">Jantar</button>
+            <button class="filter" data-category="Sobremesa">Sobremesa</button>
+            <button class="filter" data-category="Lanche">Lanche</button>
+        </div>
+
+        <div class="recipes" id="recipes">
+
+            <article class="recipe" data-category="Almoço"
+            data-search="frango cremoso creme leite arroz">
+                <img src="https://images.unsplash.com/photo-1532550907401-a500c9a57435?w=800"
+                alt="Frango preparado">
+
+                <div class="recipe-content">
+                    <span class="tag">Almoço</span>
+                    <h3>Frango cremoso</h3>
+                    <p>Uma receita deliciosa e prática para o almoço.</p>
+                    <div class="info">⏱ 30 minutos | Fácil</div>
+                    <button class="details" data-id="frango">Ver receita →</button>
+                </div>
+            </article>
+
+            <article class="recipe" data-category="Jantar"
+            data-search="macarrão molho tomate manjericão massa">
+                <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=800"
+                alt="Macarrão">
+
+                <div class="recipe-content">
+                    <span class="tag">Jantar</span>
+                    <h3>Macarrão caseiro</h3>
+                    <p>Um clássico com molho de tomate e ervas.</p>
+                    <div class="info">⏱ 25 minutos | Fácil</div>
+                    <button class="details" data-id="macarrao">Ver receita →</button>
+                </div>
+            </article>
+
+            <article class="recipe" data-category="Sobremesa"
+            data-search="brigadeiro chocolate leite condensado doce">
+                <img src="https://images.unsplash.com/photo-1581798459219-318e76aecc7b?w=800"
+                alt="Brigadeiros">
+
+                <div class="recipe-content">
+                    <span class="tag">Sobremesa</span>
+                    <h3>Brigadeiro tradicional</h3>
+                    <p>O doce brasileiro perfeito para qualquer ocasião.</p>
+                    <div class="info">⏱ 20 minutos | Fácil</div>
+                    <button class="details" data-id="brigadeiro">Ver receita →</button>
+                </div>
+            </article>
+
+            <article class="recipe" data-category="Lanche"
+            data-search="panqueca banana aveia café manhã">
+                <img src="https://images.unsplash.com/photo-1528207776546-365bb710ee93?w=800"
+                alt="Panquecas">
+
+                <div class="recipe-content">
+                    <span class="tag">Lanche</span>
+                    <h3>Panqueca de banana</h3>
+                    <p>Ideal para o café da manhã ou lanche da tarde.</p>
+                    <div class="info">⏱ 15 minutos | Fácil</div>
+                    <button class="details" data-id="panqueca">Ver receita →</button>
+                </div>
+            </article>
+
+            <article class="recipe" data-category="Almoço"
+            data-search="salada tomate cenoura folhas">
+                <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800"
+                alt="Salada">
+
+                <div class="recipe-content">
+                    <span class="tag">Almoço</span>
+                    <h3>Salada colorida</h3>
+                    <p>Uma opção leve, fresca e nutritiva.</p>
+                    <div class="info">⏱ 10 minutos | Fácil</div>
+                    <button class="details" data-id="salada">Ver receita →</button>
+                </div>
+            </article>
+
+            <article class="recipe" data-category="Jantar"
+            data-search="omelete queijo ovos tomate">
+                <img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=800"
+                alt="Omelete">
+
+                <div class="recipe-content">
+                    <span class="tag">Jantar</span>
+                    <h3>Omelete de queijo</h3>
+                    <p>Rápida, saborosa e perfeita para o jantar.</p>
+                    <div class="info">⏱ 12 minutos | Fácil</div>
+                    <button class="details" data-id="omelete">Ver receita →</button>
+                </div>
+            </article>
+
+            <p id="empty" style="display:none;grid-column:1/-1;text-align:center">
+                Nenhuma receita encontrada.
+            </p>
+
+        </div>
+    </div>
+</section>
+
+<section id="sobre">
+    <div class="container">
+        <div class="about">
+            <h2>Sobre o Tempero da Casa</h2>
+            <p>
+                Nosso objetivo é compartilhar receitas simples,
+                práticas e deliciosas para todos os momentos.
+                Explore, experimente e descubra novos sabores!
+            </p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <h3>Tempero da Casa</h3>
+    <p>© 2026 - Todos os direitos reservados.</p>
+</footer>
+
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <button class="close" id="close">✕</button>
+        <h2 id="modalTitle"></h2>
+        <p id="modalDescription"></p>
+
+        <h3>Ingredientes</h3>
+        <ul id="ingredients"></ul>
+
+        <h3>Modo de preparo</h3>
+        <ol id="steps"></ol>
+    </div>
+</div>
+
+<script>
+const recipesData = {
+    frango: {
+        title: "Frango cremoso",
+        description: "Frango macio com molho cremoso.",
+        ingredients: [
+            "500g de peito de frango",
+            "1 cebola picada",
+            "2 dentes de alho",
+            "1 caixa de creme de leite",
+            "Azeite, sal e pimenta"
+        ],
+        steps: [
+            "Tempere o frango com sal e pimenta.",
+            "Refogue a cebola e o alho no azeite.",
+            "Adicione o frango e cozinhe até dourar e ficar bem cozido.",
+            "Acrescente o creme de leite.",
+            "Misture e sirva quente."
+        ]
+    },
+
+    macarrao: {
+        title: "Macarrão caseiro",
+        description: "Macarrão com molho de tomate.",
+        ingredients: [
+            "250g de macarrão",
+            "4 tomates maduros",
+            "1 cebola",
+            "2 dentes de alho",
+            "Azeite e manjericão"
+        ],
+        steps: [
+            "Cozinhe o macarrão em água fervente.",
+            "Refogue a cebola e o alho.",
+            "Acrescente os tomates picados.",
+            "Cozinhe até formar um molho.",
+            "Misture o molho ao macarrão e sirva."
+        ]
+    },
+
+    brigadeiro: {
+        title: "Brigadeiro tradicional",
+        description: "Doce brasileiro de chocolate.",
+        ingredients: [
+            "1 lata de leite condensado",
+            "2 colheres de chocolate em pó",
+            "1 colher de manteiga",
+            "Chocolate granulado"
+        ],
+        steps: [
+            "Misture todos os ingredientes em uma panela.",
+            "Cozinhe em fogo baixo mexendo sempre.",
+            "Quando desgrudar do fundo, desligue.",
+            "Espere esfriar.",
+            "Enrole e passe no granulado."
+        ]
+    },
+
+    panqueca: {
+        title: "Panqueca de banana",
+        description: "Panqueca fácil para o café da manhã.",
+        ingredients: [
+            "1 banana madura",
+            "1 ovo",
+            "3 colheres de aveia",
+            "Canela a gosto"
+        ],
+        steps: [
+            "Amasse a banana.",
+            "Misture o ovo e a aveia.",
+            "Adicione a canela.",
+            "Coloque pequenas porções em uma frigideira.",
+            "Doure dos dois lados."
+        ]
+    },
+
+    salada: {
+        title: "Salada colorida",
+        description: "Salada fresca e nutritiva.",
+        ingredients: [
+            "Alface",
+            "1 tomate",
+            "1 cenoura",
+            "1/2 pepino",
+            "Azeite e limão"
+        ],
+        steps: [
+            "Lave e higienize os vegetais.",
+            "Corte o tomate e o pepino.",
+            "Rale a cenoura.",
+            "Misture todos os ingredientes.",
+            "Tempere e sirva."
+        ]
+    },
+
+    omelete: {
+        title: "Omelete de queijo",
+        description: "Uma refeição rápida e saborosa.",
+        ingredients: [
+            "2 ovos",
+            "2 colheres de queijo ralado",
+            "1 tomate picado",
+            "Sal e cheiro-verde"
+        ],
+        steps: [
+            "Bata os ovos.",
+            "Adicione o queijo e o tomate.",
+            "Tempere a gosto.",
+            "Coloque em uma frigideira aquecida.",
+            "Doure dos dois lados e sirva."
+        ]
+    }
+};
+
+// Pesquisa
+const search = document.getElementById("search");
+const cards = document.querySelectorAll(".recipe");
+const filters = document.querySelectorAll(".filter");
+
+let category = "Todas";
+
+function filterRecipes() {
+    const term = search.value.toLowerCase();
+    let count = 0;
+
+    cards.forEach(card => {
+        const matchCategory =
+            category === "Todas" ||
+            card.dataset.category === category;
+
+        const matchSearch =
+            card.dataset.search.includes(term);
+
+        const visible = matchCategory && matchSearch;
+
+        card.style.display = visible ? "" : "none";
+
+        if (visible) count++;
+    });
+
+    document.getElementById("empty").style.display =
+        count ? "none" : "block";
+}
+
+search.addEventListener("input", filterRecipes);
+
+filters.forEach(button => {
+    button.addEventListener("click", () => {
+        category = button.dataset.category;
+
+        filters.forEach(item =>
+            item.classList.remove("active")
+        );
+
+        button.classList.add("active");
+        filterRecipes();
+    });
+});
+
+// Abrir receita
+const modal = document.getElementById("modal");
+
+document.querySelectorAll(".details").forEach(button => {
+    button.addEventListener("click", () => {
+        const recipe = recipesData[button.dataset.id];
+
+        document.getElementById("modalTitle").textContent =
+            recipe.title;
+
+        document.getElementById("modalDescription").textContent =
+            recipe.description;
+
+        const ingredients = document.getElementById("ingredients");
+        const steps = document.getElementById("steps");
+
+        ingredients.replaceChildren();
+        steps.replaceChildren();
+
+        recipe.ingredients.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = item;
+            ingredients.appendChild(li);
+        });
+
+        recipe.steps.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = item;
+            steps.appendChild(li);
+        });
+
+        modal.classList.add("active");
+    });
+});
+
+// Fechar janela
+document.getElementById("close").addEventListener("click", () => {
+    modal.classList.remove("active");
+});
+
+modal.addEventListener("click", event => {
+    if (event.target === modal) {
+        modal.classList.remove("active");
+    }
+});
+
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+        modal.classList.remove("active");
+    }
+});
+</script>
+
+</body>
+</html>
